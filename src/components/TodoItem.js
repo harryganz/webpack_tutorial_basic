@@ -14,3 +14,5 @@ function TodoItem ({item, removeTodo, toggleComplete}) {
     </li>
   );
 }
+
+module.exports = TodoItem;

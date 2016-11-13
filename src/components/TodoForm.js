@@ -30,3 +30,5 @@ class TodoForm extends Component {
     );
   }
 }
+
+module.exports = TodoForm;
