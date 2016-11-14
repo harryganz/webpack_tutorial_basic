@@ -3,16 +3,19 @@
 ### Configure Webpack for React
 
 1. Install Webpack
+
   ```
   npm install webpack --save
   ```
 2. Install babel-core, babel-loader, babel-preset-react, babel-preset-es2015
+
   ```
   npm install babel-core babel-loader babel-preset-react babel-preset-es2015 --save
   ```
 3. Create a file named webpack.config.js in the root of the project. This is where
 webpack will look for the configuration
 4. In webpack.config.js add the following:
+
   ```
   const path = require('path');
   const appSrc = path.join(__dirname, 'src');
@@ -50,12 +53,14 @@ webpack will look for the configuration
   module.exports = config;
   ```
 5. Add a build script to package.json:
+
   ```
   "scripts": {
     "build": "webpack"
   }
   ```
 6. Run the build script
+
   ```
   npm run build
   ```
@@ -63,6 +68,7 @@ webpack will look for the configuration
 ### Setting up a dev server
 
 1. Create an index.html file in the root of the project:
+
   ```
   <!DOCTYPE html>
   <html lang="en">
@@ -79,16 +85,19 @@ webpack will look for the configuration
   </html>
   ```
 2. Install webpack-dev-server
+
   ```
   npm install webpack-dev-server --save
   ```
 3. Add a script to your package.json file
+
   ```
   "scripts": {
     "start": "webpack-dev-server --port=3000 --inline --hot"
   }
   ```
 4. Run the script:
+
   ```
   npm start
   ```
@@ -97,10 +106,12 @@ webpack will look for the configuration
 ### Loading Styles
 
 1. Install the style and css loaders
+
   ```
   npm install style-loader css-loader
   ```
 2. Modify webpack.config.js to use the style and css loader
+
   ```
   const path = require('path');
   const appSrc = path.join(__dirname, 'src');
@@ -148,6 +159,7 @@ src/components/TodoForm.js and src/components/TodoItem.js. Don't uncomment the
 lines importing images yet.
 
   App.js:
+
   ```
   import React, {Component} from 'react';
   import TodoList from './TodoList';
@@ -156,11 +168,13 @@ lines importing images yet.
   // import smiley from 'images/smiley.png';
   ```
   TodoForm.js:
+
   ```
   import React, {Component} from 'react';
   import 'components/TodoForm.css';
   ```
   TodoItem.js:
+
   ```
   import React, {Component} from 'react';
   import 'components/TodoForm.css';
@@ -171,10 +185,12 @@ the new styles at http://localhost:3000/
 ### Adding Assets
 
 1. Install file-loader
+
   ```
   npm install file-loader
   ```
 2. Modify webpack.config.js
+
     ```
     const path = require('path');
     const appSrc = path.join(__dirname, 'src');
@@ -247,6 +263,7 @@ the new styles at http://localhost:3000/
     module.exports = config;
     ```
 3. Uncomment the import statements in src/index.js
+
   ```
   import React from 'react';
   import {render} from 'react-dom';
@@ -260,6 +277,7 @@ the new styles at http://localhost:3000/
   };
   ```
 4. Uncomment the import statement and the image tag in src/components/App.js
+
   ```
   import React, {Component} from 'react';
   import TodoList from './TodoList';
@@ -338,6 +356,7 @@ and fonts you added at http://localhost:3000/
 ### Adding a Source Map
 
 1. Modify webpack.config.js:
+
   ```
   const webpack = require('webpack');
   const path = require('path');
@@ -418,10 +437,12 @@ and fonts you added at http://localhost:3000/
 ### Creating an External Stylesheet
 
 1. Install extract-text-webpack-plugin
+
   ```
   npm install extract-text-webpack-plugin
   ```
 2. Modify your webpack.config.js:
+
   ```
   const webpack = require('webpack');
   const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -501,6 +522,7 @@ and fonts you added at http://localhost:3000/
   module.exports = config;
   ```
 3. Modify your index.html to load the stylesheet
+
   ```
   <!DOCTYPE html>
   <html lang="en">
