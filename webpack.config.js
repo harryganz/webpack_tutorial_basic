@@ -30,11 +30,12 @@ let config = {
           presets: ['es2015', 'react'] // babel understands es6 and JSX syntax
         }
       },
-      // Load css in javascript
+      // Load css in external stylesheet
+      // Need publicPath to resolve relative paths of urls in css
       {
         test: /\.css$/,
         include: appSrc,
-        loader: ExtractTextPlugin.extract({loader: 'css', fallbackLoader: 'style'})
+        loader: ExtractTextPlugin.extract('style-loader','css-loader', {publicPath: '/'})
       },
       // Output font files to build folder
       {

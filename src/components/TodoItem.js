@@ -1,5 +1,5 @@
 import React from 'react';
-// import 'components/TodoItem.css';
+import 'components/TodoItem.css';
 
 function TodoItem ({item, removeTodo, toggleComplete}) {
   let classList = ['todo-item'];
