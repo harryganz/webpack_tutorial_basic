@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const appSrc = path.join(__dirname, 'src');
 
@@ -33,7 +34,7 @@ let config = {
       {
         test: /\.css$/,
         include: appSrc,
-        loader: 'style!css'
+        loader: ExtractTextPlugin.extract({loader: 'css', fallbackLoader: 'style'})
       },
       // Output font files to build folder
       {
@@ -66,7 +67,8 @@ let config = {
     ]
   },
   plugins: [
-    new webpack.SourceMapDevToolPlugin()
+    new webpack.SourceMapDevToolPlugin(),
+    new ExtractTextPlugin('css/styles.css')
   ]
 };
 

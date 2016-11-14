@@ -11,7 +11,7 @@
   npm install babel-core babel-loader babel-preset-react babel-preset-es2015 --save
   ```
 3. Create a file named webpack.config.js in the root of the project. This is where
-webpack will look for the configuration.
+webpack will look for the configuration
 4. In webpack.config.js add the following:
   ```
   const path = require('path');
@@ -334,3 +334,187 @@ the new styles at http://localhost:3000/
   ```
 5. Make sure the dev server is running and you should be able to see the images
 and fonts you added at http://localhost:3000/
+
+### Adding a Source Map
+
+1. Modify webpack.config.js:
+  ```
+  const webpack = require('webpack');
+  const path = require('path');
+  const appSrc = path.join(__dirname, 'src');
+
+  let config = {
+    entry: './src/index.js',
+    output: {
+      path: './build',
+      filename: 'js/bundle.js'
+    },
+    // How should webpack resolve paths in import statements
+    resolve: {
+      root: path.join(__dirname, 'node_modules'), // If not relative, fallback to node_modules
+      // If not relative and matches components, images, fonts use these paths
+      alias: {
+        components: path.join(appSrc, 'components'),
+        images: path.join(appSrc, 'assets', 'images'),
+        fonts: path.join(appSrc, 'assets', 'fonts')
+      }
+    },
+    module: {
+      loaders: [
+        // Transform javascript files using babel loader
+        {
+          test: /\.(js|jsx)$/,
+          include: appSrc,
+          loader: 'babel',
+          query: {
+            presets: ['es2015', 'react'] // babel understands es6 and JSX syntax
+          }
+        },
+        // Load css in javascript
+        {
+          test: /\.css$/,
+          include: appSrc,
+          loader: 'style!css'
+        },
+        // Output font files to build folder
+        {
+          test: /\.(otf|ttf|woff|woff2|eot|svg)/,
+          include: appSrc,
+          loader: 'file',
+          query: {
+            name: 'fonts/[name].[hash:8].[ext]'
+          }
+        },
+        // Output images to the build folder
+        {
+          test: /\.(jpg|ico|png|gif)$/,
+          include: appSrc,
+          exclude: /favicon.ico$/,
+          loader: 'file',
+          query: {
+            name: 'images/[name].[hash:8].[ext]'
+          }
+        },
+        // Output favicon to the root of the build folder
+        {
+          test: /favicon.ico$/,
+          include: appSrc,
+          loader: 'file',
+          query: {
+            name: 'favicon.ico'
+          }
+        }
+      ]
+    },
+    plugins: [
+      new webpack.SourceMapDevToolPlugin()
+    ]
+  };
+
+  module.exports = config;
+```
+2. When you restart the dev server you will have a source map
+
+### Creating an External Stylesheet
+
+1. Install extract-text-webpack-plugin
+  ```
+  npm install extract-text-webpack-plugin
+  ```
+2. Modify your webpack.config.js:
+  ```
+  const webpack = require('webpack');
+  const ExtractTextPlugin = require('extract-text-webpack-plugin');
+  const path = require('path');
+  const appSrc = path.join(__dirname, 'src');
+
+  let config = {
+    entry: './src/index.js',
+    output: {
+      path: './build',
+      filename: 'js/bundle.js'
+    },
+    // How should webpack resolve paths in import statements
+    resolve: {
+      root: path.join(__dirname, 'node_modules'), // If not relative, fallback to node_modules
+      // If not relative and matches components, images, fonts use these paths
+      alias: {
+        components: path.join(appSrc, 'components'),
+        images: path.join(appSrc, 'assets', 'images'),
+        fonts: path.join(appSrc, 'assets', 'fonts')
+      }
+    },
+    module: {
+      loaders: [
+        // Transform javascript files using babel loader
+        {
+          test: /\.(js|jsx)$/,
+          include: appSrc,
+          loader: 'babel',
+          query: {
+            presets: ['es2015', 'react'] // babel understands es6 and JSX syntax
+          }
+        },
+        // Load css in javascript
+        {
+          test: /\.css$/,
+          include: appSrc,
+          loader: ExtractTextPlugin.extract({loader: 'css', fallbackLoader: 'style'})
+        },
+        // Output font files to build folder
+        {
+          test: /\.(otf|ttf|woff|woff2|eot|svg)/,
+          include: appSrc,
+          loader: 'file',
+          query: {
+            name: 'fonts/[name].[hash:8].[ext]'
+          }
+        },
+        // Output images to the build folder
+        {
+          test: /\.(jpg|ico|png|gif)$/,
+          include: appSrc,
+          exclude: /favicon.ico$/,
+          loader: 'file',
+          query: {
+            name: 'images/[name].[hash:8].[ext]'
+          }
+        },
+        // Output favicon to the root of the build folder
+        {
+          test: /favicon.ico$/,
+          include: appSrc,
+          loader: 'file',
+          query: {
+            name: 'favicon.ico'
+          }
+        }
+      ]
+    },
+    plugins: [
+      new webpack.SourceMapDevToolPlugin(),
+      new ExtractTextPlugin('css/styles.css')
+    ]
+  };
+
+  module.exports = config;
+  ```
+3. Modify your index.html to load the stylesheet
+  ```
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Webpack Tutorial - Basic</title>
+    <script src="/js/bundle.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <div id="root">
+      <!-- Yield to React -->
+    </div>
+  </body>
+  </html>
+  ```
+4. Restart the dev server and now your stylesheet can load before the javascript
+bundle
