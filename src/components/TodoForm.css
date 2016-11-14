@@ -1,0 +1,4 @@
+.todo-form form > * {
+  display: inline-block;
+  margin: 0 0.25em;
+}

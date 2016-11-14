@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
+// import 'components/App.css';
+// import smiley from 'images/smiley.png';
 
 class App extends Component {
   constructor (props) {
@@ -49,7 +51,12 @@ class App extends Component {
     return (
       <div className='app'>
         <div className='page-header'>
-          <h1>Todo List Demo</h1>
+          <h1>
+            {
+              // <img src={smiley} alt='smiley' width="32px" height="32px" />
+            }
+            Todo List Demo
+          </h1>
         </div>
         <TodoForm addTodo={this.addTodo} />
         <TodoList

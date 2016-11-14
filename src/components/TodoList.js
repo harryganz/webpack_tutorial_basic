@@ -1,5 +1,5 @@
 import React from 'react';
-import TodoItem from './TodoItem';
+import TodoItem from 'components/TodoItem';
 
 function TodoList ({todos, removeTodo, toggleComplete}) {
   let todoItems = todos.map(item =>
@@ -14,9 +14,9 @@ function TodoList ({todos, removeTodo, toggleComplete}) {
   return (
     <div className='todo-list'>
       <h3>Todo List</h3>
-      <ul>
+      <ol>
         {todoItems}
-      </ul>
+      </ol>
     </div>
   );
 }
