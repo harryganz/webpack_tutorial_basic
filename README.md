@@ -48,6 +48,7 @@ webpack will look for the configuration
           }
         }
     ]
+    }
   };
 
   module.exports = config;
