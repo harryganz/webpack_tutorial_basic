@@ -151,6 +151,7 @@ webpack will look for the configuration
           loader: 'style!css' // or loaders: ['style', 'css']
         }
     ]
+    }
   };
 
   module.exports = config;
